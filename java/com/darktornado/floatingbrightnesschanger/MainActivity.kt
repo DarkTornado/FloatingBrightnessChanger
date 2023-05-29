@@ -3,6 +3,7 @@ package com.darktornado.floatingbrightnesschanger
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
@@ -17,9 +18,12 @@ class MainActivity : Activity() {
         layout.orientation = 1
         val on = Switch(this)
         on.text = "구석 터치 사용"
-        on.setOnCheckedChangeListener{ swit: CompoundButton, onoff: Boolean ->
+        on.setOnCheckedChangeListener { swit: CompoundButton, onoff: Boolean ->
             val intent = Intent(this, MainService::class.java)
-            if (onoff) startService(intent);
+            if (onoff) {
+                if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent)
+                else startService(intent)
+            };
             else stopService(intent);
         }
         layout.addView(on)
