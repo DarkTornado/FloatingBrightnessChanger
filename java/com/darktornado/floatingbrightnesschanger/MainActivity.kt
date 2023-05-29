@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.LinearLayout
 import android.widget.Switch
 
@@ -16,6 +17,11 @@ class MainActivity : Activity() {
         layout.orientation = 1
         val on = Switch(this)
         on.text = "구석 터치 사용"
+        on.setOnCheckedChangeListener{ swit: CompoundButton, onoff: Boolean ->
+            val intent = Intent(this, MainService::class.java)
+            if (onoff) startService(intent);
+            else stopService(intent);
+        }
         layout.addView(on)
         val perm1 = Button(this)
         perm1.text = "다른 앱 위에 그리기 권한 허용"
