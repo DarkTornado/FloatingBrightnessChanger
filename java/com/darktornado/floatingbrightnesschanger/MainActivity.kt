@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Switch
 
-
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +27,11 @@ class MainActivity : Activity() {
         layout.addView(perm1)
         val perm2 = Button(this)
         perm2.text = "시스템 설정 변경 권한 허용"
+        perm2.setOnClickListener {
+            val uri = Uri.parse("package:$packageName")
+            val intent = Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, uri)
+            startActivityForResult(intent, 0)
+        }
         layout.addView(perm2)
         setContentView(layout)
     }
