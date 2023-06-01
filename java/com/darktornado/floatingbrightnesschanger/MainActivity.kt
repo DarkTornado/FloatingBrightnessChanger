@@ -24,7 +24,7 @@ class MainActivity : Activity() {
                 if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent)
                 else startService(intent)
             };
-            else stopService(intent);
+            else stopService(intent)
         }
         layout.addView(on)
         val perm1 = Button(this)
