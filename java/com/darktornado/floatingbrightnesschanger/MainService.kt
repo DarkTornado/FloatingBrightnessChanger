@@ -32,7 +32,7 @@ class MainService : Service() {
         } else {
             mParams = WindowManager.LayoutParams(
                     dip2px(15), dip2px(22),
-                    WindowManager.LayoutParams.TYPE_PHONE,
+                    WindowManager.LayoutParams.TYPE_TOAST,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                     PixelFormat.TRANSLUCENT)
         }
