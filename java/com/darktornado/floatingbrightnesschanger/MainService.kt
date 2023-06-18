@@ -1,6 +1,7 @@
 package com.darktornado.floatingbrightnesschanger
 
-import android.app.Service
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
@@ -16,7 +17,21 @@ class MainService : Service() {
     private var btn: TextView? = null
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        createUI();
+        createUI()
+        val noti: Notification.Builder
+        if (Build.VERSION.SDK_INT >= 26) {
+            val nc = NotificationChannel("main_nofi_channel", "foreground", NotificationManager.IMPORTANCE_LOW)
+            val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            nm.createNotificationChannel(nc)
+            noti = Notification.Builder(this, "main_nofi_channel")
+        } else {
+            noti = Notification.Builder(this);
+        }
+        noti.setSmallIcon(R.mipmap.ic_launcher)
+        noti.setContentTitle("화면 밝기 조절")
+        noti.setContentText("화면 밝기 조절 상시 대기 실행중")
+        noti.setContentIntent(PendingIntent.getActivity(this, 0, Intent(this, MainActivity::class.java), 0))
+        startForeground(1, noti.build())
         return START_NOT_STICKY
     }
 
@@ -41,19 +56,22 @@ class MainService : Service() {
         btn = TextView(this)
         btn?.setBackgroundColor(Color.argb(90, 0, 0, 0))
         btn?.setLayoutParams(LinearLayout.LayoutParams(-1, -1))
-//        btn.setOnClickListener(View.OnClickListener { view: View? -> openMenu(Gravity.RIGHT, +1) })
+//        btn.setOnClickListener(View.OnClickListener { view: View? -> openMenu(Gravity.RIGHT, +1) })9
 
         wm.addView(btn, mParams)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        val wm = getSystemService(WINDOW_SERVICE) as WindowManager
-        try {
-            wm.removeView(btn)
-        } catch (e: Exception) {
-        }
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        try {
+//            val wm = getSystemService(WINDOW_SERVICE) as WindowManager
+//
+//            if (btn != null) wm.removeView(btn)
+//            btn = null
+//        } catch (e: Exception) {
+//            Toast.makeText(this, e.toString(), 1).show()
+//        }
+//    }
 
     override fun onBind(p0: Intent?): IBinder? {
 //        TODO("Not yet implemented")
