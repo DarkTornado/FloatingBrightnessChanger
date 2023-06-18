@@ -22,7 +22,7 @@ class MainActivity : Activity() {
             val intent = Intent(this, MainService::class.java)
             if (onoff) {
                 if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent)
-                else stopService(intent)
+                else startService(intent)
             };
             else stopService(intent)
         }
