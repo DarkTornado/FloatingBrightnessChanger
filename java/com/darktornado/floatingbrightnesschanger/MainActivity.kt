@@ -23,7 +23,7 @@ class MainActivity : Activity() {
             if (onoff) {
                 if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent)
                 else startService(intent)
-            };
+            }
             else stopService(intent)
         }
         layout.addView(on)
