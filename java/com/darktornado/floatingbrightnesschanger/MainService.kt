@@ -8,9 +8,11 @@ import android.graphics.PixelFormat
 import android.os.Build
 import android.os.IBinder
 import android.view.Gravity
+import android.view.View
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 
 class MainService : Service() {
 
@@ -56,22 +58,22 @@ class MainService : Service() {
         btn = TextView(this)
         btn?.setBackgroundColor(Color.argb(90, 0, 0, 0))
         btn?.setLayoutParams(LinearLayout.LayoutParams(-1, -1))
-//        btn.setOnClickListener(View.OnClickListener { view: View? -> openMenu(Gravity.RIGHT, +1) })9
+        btn?.setOnClickListener(View.OnClickListener { view: View? ->
+            Toast.makeText(this, "test", 1).show()
+        })
 
         wm.addView(btn, mParams)
     }
 
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        try {
-//            val wm = getSystemService(WINDOW_SERVICE) as WindowManager
-//
-//            if (btn != null) wm.removeView(btn)
-//            btn = null
-//        } catch (e: Exception) {
-//            Toast.makeText(this, e.toString(), 1).show()
-//        }
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        try {
+            val wm = getSystemService(WINDOW_SERVICE) as WindowManager
+            if (btn != null) wm.removeView(btn)
+            btn = null
+        } catch (e: Exception) {
+        }
+    }
 
     override fun onBind(p0: Intent?): IBinder? {
 //        TODO("Not yet implemented")
