@@ -6,10 +6,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.widget.Button
-import android.widget.CompoundButton
-import android.widget.LinearLayout
-import android.widget.Switch
+import android.widget.*
+import java.lang.Exception
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,8 +21,9 @@ class MainActivity : Activity() {
             if (onoff) {
                 if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent)
                 else startService(intent)
+            } else {
+                stopService(intent)
             }
-            else stopService(intent)
         }
         layout.addView(on)
         val perm1 = Button(this)
