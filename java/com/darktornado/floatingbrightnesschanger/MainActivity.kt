@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.widget.*
-import java.lang.Exception
 
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
